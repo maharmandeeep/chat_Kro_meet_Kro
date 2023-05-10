@@ -1,0 +1,98 @@
+@import "../../global_colour.scss";
+.one{
+   
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $main_colour;
+
+
+    .outercontainer{
+        height: 70vh;
+        width: 30%;
+        background-color: white;
+        display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2rem;
+    padding: 3rem 5rem;
+        
+
+
+        .formstyle{
+            display: flex;
+            flex-direction: column;
+            gap: 4vh;
+            
+            justify-content: center;
+            align-items: center;
+            width: 70%;
+
+          
+
+            .logo{
+                height: 92px;
+                width: 220px;
+
+               img{
+                height: inherit;
+                width: inherit;
+               }
+               
+               
+            }
+            input{
+                background-color: transparent;
+                padding: 0.7rem;
+                border:0.1rem solid #64FC04;
+                border-radius: 0.4rem;
+                font-size: 1rem;
+                width:100%;
+                &:focus{
+                    border: 0.1rem solid #045440;
+                    outline: none;
+                }
+            }
+
+            button{
+                background-color: #04FC44;
+                padding: 0.5rem 1rem;
+                text-transform: uppercase;
+                color: white;
+                cursor: pointer;
+                border-radius: 0.4rem;
+                border: none;
+                font-weight: bold;
+                width: 60%;
+                transition: 0.2s all ease;
+
+                &:hover{
+                    color: #4ddb60;
+                    background-color: rgb(67, 136, 88);
+                }
+
+            }
+
+            .last{
+                text-transform: uppercase;
+                font-size: 13px;
+
+                a{
+                    text-decoration: none;
+                    font-weight: 800;
+
+                }
+            }
+            
+            
+        }
+    }
+
+
+
+    
+
+    
+}
