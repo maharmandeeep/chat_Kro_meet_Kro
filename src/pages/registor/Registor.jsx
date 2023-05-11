@@ -1,10 +1,23 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import "./registor.scss";
 import { useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
+import axios from "axios";
+import { registorroute } from "../../utils/API_routes";
+
+//toat property
+export const toastContainer = {
+  position: "bottom-right",
+  autoClose: 7000,
+  pauseOnHover: true,
+  draggable: true,
+  theme: "light",
+};
 
 function Registor() {
+
+  const navigate = useNavigate();
   const [values, setValues] = useState({
     name: "",
     email: "",
@@ -12,32 +25,48 @@ function Registor() {
     confirmpassword: "",
   });
 
-  //toast container
-  const toastContainer = {
-    position: "bottom-right",
-    autoClose: 7000,
-    pauseOnHover: true,
-    draggable: true,
-    theme: "light",
-  };
-
-
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    alert("form");
-    console.log(values);
+
     //calling the function for form valudation   and is it will return true we will call our api
     if (handleValidation()) {
-      //here we call api
+      try {
+        const { name, email, password } = values;
+
+        const { data } = await axios.post(
+          registorroute,
+          {
+            name,
+            email,
+            password,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            withCredentials: true,
+          }
+        );
+
+        toast.success(data.msg, toastContainer);
+        //after succeful regitor it will redirect to chatpage
+        if(data.status){
+         navigate("/Chat");
+        }
+       
+      } catch (error) {
+        toast.error(error.response.data.msg, toastContainer);
+      }
     }
 
-   // after sunmitting the form this will make a form clear
+    // after sunmitting the form this will make a form clear
+    
     setValues({
       name: "",
       email: "",
       password: "",
       confirmpassword: "",
-    })
+    });
   }
 
   const handleChange = (e) => {
@@ -46,8 +75,8 @@ function Registor() {
       [e.target.name]: e.target.value,
     });
   };
-  
-  //function for validation is our form is valid to go registor or not 
+
+  //function for validation is our form is valid to go registor or not
   const handleValidation = () => {
     const { password, name, email, confirmpassword } = values;
 
