@@ -1,0 +1,66 @@
+@import "../../global_colour.scss";
+
+.loader {
+    margin-top: 30vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.allinonecontainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    height: 100vh;
+    width: 100vw;
+
+    .titlecontainer {
+        font-weight: 500;
+        color: green;
+    }
+
+    .allavatars {
+        display: flex;
+        gap: 2rem;
+
+        .avatar {
+            border: 0.4rem solid transparent;
+            padding: 0.4rem;
+            border-radius: 5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: 0.5s ease-in-out;
+
+            img {
+                height: 6rem;
+                transition: 0.5s ease-in-out;
+            }
+        }
+
+        .selected{
+            border:0.4rem solid green ;
+        }
+    }
+
+
+    .buttontoadd{
+        padding: 1rem 2rem;
+        background-color: #04FC44;
+        color: white;
+        border-radius: 0.4rem;
+        border: none;
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+
+        &:hover{
+            color: #4ddb60;
+            background-color: rgb(67, 136, 88);
+
+        }
+
+    }
+}

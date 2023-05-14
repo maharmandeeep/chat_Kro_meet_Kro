@@ -22,7 +22,7 @@ function Registor() {
     name: "",
     email: "",
     password: "",
-    confirmpassword: "",
+    confirmpassword: "",   
   });
 
   async function handleSubmit(e) {
@@ -55,7 +55,7 @@ function Registor() {
         }
        
       } catch (error) {
-        toast.error(error.response.data.msg, toastContainer);
+        toast.error(error.response.data.msg, toastContainer)  
       }
     }
 

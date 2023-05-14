@@ -1,13 +1,24 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./login.scss";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { loginroute } from "../../utils/API_routes";
+import { getmydata, loginroute } from "../../utils/API_routes";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { toastContainer } from "../registor/Registor";
+import Context from "../../context_api/user_data_context";
+
 
 function Login() {
+     
+  const navigate = useNavigate();
+  //checking is we alredy logi or not 
+
+  //for refresh login page
+  const[refresh,setRefresh]=useState(false);
+
+
+
   const [values, setValues] = useState({
     name: "",
     password: "",
@@ -34,6 +45,7 @@ function Login() {
         );
 
         toast.success(data.msg, toastContainer);
+        setRefresh(!refresh);
       } catch (error) {
         toast.error(error.response.data.msg, toastContainer);
       }
@@ -57,6 +69,24 @@ function Login() {
 
     return true;
   };
+
+//check we already login or not if the login we have cookie inn our authentication api
+
+const {setuserData,userData}=useContext(Context);
+  useEffect(()=>{
+     axios.get(getmydata,{
+      withCredentials:true,
+     }).then((res)=>{
+        setuserData(res.data.user);
+       
+        navigate("/Chat");
+
+     }).catch((error)=>{
+      
+       setuserData({});
+     })
+
+  },[refresh])
 
   return (
     <>
