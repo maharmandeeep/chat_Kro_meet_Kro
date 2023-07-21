@@ -1,4 +1,4 @@
-import React,{ useState }  from 'react'
+import React,{ useEffect, useState }  from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.scss'
@@ -7,10 +7,15 @@ import Context from './context_api/user_data_context.jsx'
 
 
 
+
+
+
 const AppWrapper=()=>{
 
- 
+  
   const [userData,setuserData]=useState({});
+
+ 
 
   return(
     

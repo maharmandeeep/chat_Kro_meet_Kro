@@ -1,0 +1,32 @@
+@import "../../global_colour.scss";
+
+.mainwelcome{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.2rem;
+
+    img{
+        height: 23rem;
+        @media screen and (min-width: 720px) and (max-width: 1080px){
+            height: 17rem;
+        }
+    }
+
+    h1{
+        font-size: 2rem;
+        span{
+            color: green;
+        }
+    }
+    h3{
+        font-size: 1.3rem;
+    }
+    
+    
+
+
+}

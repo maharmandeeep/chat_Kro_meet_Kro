@@ -1,0 +1,110 @@
+
+.maincontactsontainer{
+    height: 98%;
+    width: 99%;
+
+    display: grid;
+    grid-template-rows: 15% 70% 15%;
+    overflow: hidden;
+
+   
+    
+
+
+    .brand{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+
+
+        img{
+            height: 4rem;
+            width: 10rem;
+        }
+    }
+
+    .contacts{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow: auto;
+        gap: 0.8rem;
+        
+
+        &::-webkit-scrollbar {
+            width: 0.4rem;
+            &-thumb {
+              background-color: #00000039;
+              width: 0.1rem;
+              border-radius: 1rem;
+            }
+
+        }
+
+
+        .contact{
+            min-height: 5rem;
+            cursor: pointer;
+            width: 90%;
+            border-radius: 0.2rem;
+            padding: 0.4rem;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+           transition: 0.5s all ease-in-out;
+
+
+            .avtar{
+              
+
+                img{
+                    height: 3rem;
+
+                }
+            }
+
+            .username{
+                    h3{
+                        color: black;
+                    }
+            }
+
+            
+        }
+
+        .selected{
+            background-color: grey;
+        }
+    }
+
+    .current_user{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+          gap: 1rem;
+          .avtar{
+
+            img{
+                height: 4rem;
+
+            }
+          }
+
+          .username{
+
+            h2{
+             color: black;
+            }
+          }
+
+          @media screen and (min-width: 720px) and (max-width: 1080px) {
+            gap: 0.5rem;
+            .username {
+              h2 {
+                font-size: 1rem;
+              }
+            }
+          }
+    }
+}

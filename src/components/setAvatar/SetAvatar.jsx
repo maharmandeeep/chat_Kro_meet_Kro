@@ -1,36 +1,84 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./setAvatar.scss";
 import axios from "axios";
 import { Buffer } from "buffer";
 import { toast } from "react-toastify";
 import { toastContainer } from "../../pages/registor/Registor";
+import { getmydata, setAvatar } from "../../utils/API_routes";
+import Context from "../../context_api/user_data_context";
+import { useNavigate } from "react-router-dom";
 
 function SetAvatar() {
   //this is random api
-  
+  const navigate = useNavigate(); 
 
   const [loader, setLoader] = useState(true);
   const [avatars, setAvatars] = useState([]);
   const [selectedAvatar, setselectedAvatar] = useState(undefined);
-  const [profilepicture,setprofilepicture]=useState(undefined);
+  const [profilepicture, setprofilepicture] = useState(undefined);
+
+  const { setuserData, userData } = useContext(Context);
+
+ 
+
+  useEffect(()=>{
+    if (!localStorage.getItem(import.meta.env.VITE_REACT_APP_LOCALHOST_KEY)) {
+      navigate("/login");
+    }
+   
+  },[])
 
 
 
-  function setprfileHandle(){
+  async function setprfileHandle() {
+    if (selectedAvatar === undefined) {
+      toast.error("Please select the avatar first", toastContainer);  
+    } else {
 
-    if(selectedAvatar===(undefined)){
-      toast.error("Please select the avatar first",toastContainer);
+      const user = await JSON.parse(
+        localStorage.getItem(import.meta.env.VITE_REACT_APP_LOCALHOST_KEY)
+      );
+
+
+      const { data } = await axios.post(
+        `${setAvatar}/${user._id}`,
+        {
+          image: avatars[selectedAvatar],
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+
+      if (data.success) {
+        user.isAvatarImageSet=true;
+        user.avtarImage=data.image;
+        localStorage.setItem(import.meta.env.VITE_REACT_APP_LOCALHOST_KEY,JSON.stringify(user));
+
+        toast.success(data.msg, toastContainer);
+        navigate("/Chat");
+      } else {
+        toast.error("Error setting avatar. Please try again.", toastContainer);
+      }
+
+     
     }
   }
 
-
-
-
   useEffect(() => {
+     
+
     async function fetchdata() {
       const data = [];
       for (let i = 0; i < 4; i++) {
-        const image = await axios.get(`https://api.multiavatar.com/${Math.round(Math.random()*100000)}?apikey=oImbfUZOqyXiWA`);
+        const image = await axios.get(
+          `https://api.multiavatar.com/${Math.round(
+            Math.random() * 100000
+          )}?apikey=oImbfUZOqyXiWA`
+        );
         const buffer = new Buffer.from(image.data);
         data.push(buffer.toString("base64"));
       }
@@ -40,8 +88,6 @@ function SetAvatar() {
 
     fetchdata();
   }, []);
-
-  console.log(avatars);
 
   return (
     <>
@@ -58,7 +104,7 @@ function SetAvatar() {
           <div className="allavatars">
             {avatars.map((avatar, index) => (
               <div
-                className={`avatar ${
+                key={index}  className={`avatar ${
                   selectedAvatar === index ? " selected" : ""
                 }`}
               >
@@ -73,7 +119,14 @@ function SetAvatar() {
             ))}
           </div>
 
-          <button className="buttontoadd" onClick={()=>{setprfileHandle()}}>Select your profile picture</button>
+          <button
+            className="buttontoadd"
+            onClick={() => {
+              setprfileHandle();
+            }}
+          >
+            Select your profile picture
+          </button>
         </div>
       )}
     </>
